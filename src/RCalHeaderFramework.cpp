@@ -1431,6 +1431,15 @@ int RCalHeaderFramework::render(WINDOW* window, int top, int left, bool /*adding
 //                 " " + std::to_string(itemIndex + 1) + ". " + text, styles.attributes(itemStyle));
 //         }
 //     }
+    // Fill the unused area below the eight calendar rows, leaving the last
+    // row available for the status bar. Wide curses keeps each shade one cell.
+    cchar_t background{};
+    if (setcchar(&background, L"░", A_DIM, 0, nullptr) == OK) {
+        for (int row = top + 8; row < windowHeight - 1; ++row) {
+            mvwhline_set(window, row, left, &background, windowWidth - left);
+        }
+    }
+
     if (windowHeight > top + 8) {
         const std::string date = std::to_string(selectedDate_.year) + "-" +
             (selectedDate_.month < 10 ? "0" : "") + std::to_string(selectedDate_.month) + "-" +

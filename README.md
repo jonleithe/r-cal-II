@@ -9,17 +9,21 @@ Make or Ninja), and the ncurses wide-character development library
 (`libncurses-dev` on Debian/Ubuntu). Run in an interactive terminal:
 
 ```sh
-cmake -S . -B build
-cmake --build build
-./build/r-cal
+./build.sh debug
+./build/debug/r-cal
 ```
 
-Optionally load the existing key=value configuration format with `./build/r-cal path/to/config`.
+Use `./build.sh release` for an optimized build in `build/release`, or
+`./build.sh all` to build both configurations. With no argument, the script
+defaults to `all`. It can be invoked from any working directory.
+
+Optionally load the existing key=value configuration format with
+`./build/debug/r-cal path/to/config`.
 
 - Left/Right: previous/next day
 - Page Up/Page Down: move by one visible page
 - Home or n: today
 - q, Q, or Escape: quit
 
-The viewport adapts to terminal resizing. Use `cmake --build build --target clean`
+The viewport adapts to terminal resizing. Use `cmake --build build/debug --target clean`
 to remove compiled output.
